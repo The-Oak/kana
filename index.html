@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Транслитератор Поливанова</title>
+	<script src="kanji-data.js"></script>
+	<script src="base.js"></script>
+	<script src="translit.js"></script>
+    <link rel="stylesheet" href="base.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-tabs">
+            <button class="tab-btn active" data-tab="intro">Введение</button>
+            <button class="tab-btn" data-tab="reading">Чтение</button>
+            <button class="tab-btn" data-tab="kana">Каны</button>
+            <button class="tab-btn" data-tab="kanji">Кёику-кандзи</button>
+        </div>
+		
+		<div id="intro-tab" class="tab-content active">
+			<div class="intro-header">
+				Краткое описание проекта
+			</div>
+			
+				<div class="scrollable-content intro">
+					<h3>Японская письменность устроена иначе, чем привычные европейские языки.</h3>
+<br>
+Здесь нет алфавита в привычном смысле:<br>
+звучание передаётся каной,<br>
+а смысл — кандзи.<br>
+Один и тот же текст можно читать на разных уровнях —<br>
+от простого звучания до знака, несущего значение.<br>
+<br>
+<h3>Японский текст начинается со звучания.</h3>
+<br>
+Этот инструмент помогает увидеть, как русская речь превращается в японскую письменность:<br>
+слоги — в каны,<br>
+слова — в кандзи,<br>
+смысл — в форму.<br>
+<br>
+Вы выбираете текст, настраиваете глубину погружения —<br>
+от простого чтения по кане до знакомства с кёику-кандзи.<br>
+<br>
+Это не перевод и не учебник.<br>
+Это способ <b>читать медленно</b>,<br>
+замечать структуру языка<br>
+и чувствовать, как звучание обретает знак.<br>
+<br>
+<h3>Перейдите во вкладку «Чтение».</h3><br>
+Там начинается работа с текстом — и все настройки находятся рядом: прямо в нижней части страницы.</div>			
+			</div>
+		
+
+        <div id="reading-tab" class="tab-content">
+            <div class="result-header">Результат транскрипции</div>
+            <div id="result" class="result-area">
+                Выберите текст в н<span class="kana" data-read="а">あ</span>стройк<span class="kana" data-read="а">あ</span>х (внизу стр<span class="kana" data-read="а">あ</span>ницы)<br> для отобр<span class="kana" data-read="а">あ</span>жения результ<span class="kana" data-read="а">あ</span>т<span class="kana" data-read="а">あ</span> тр<span class="kana" data-read="а">あ</span>нслитер<span class="kana" data-read="а">あ</span>ции<br>по системе Полив<span class="kana" data-read="а">あ</span>нов<span class="kana" data-read="а">あ</span>.
+            </div>
+            
+            <button class="settings-toggle" id="settings-toggle">Настройки</button>
+            
+            <div class="settings-panel" id="settings-panel">
+                <div class="settings-tabs">
+                    <button class="settings-tab-btn active" data-settings-tab="text-settings">Текст</button>
+                    <button class="settings-tab-btn" data-settings-tab="kana-settings">Каны</button>
+                    <button class="settings-tab-btn" data-settings-tab="kanji-settings">Кандзи</button>
+                </div>
+                
+                <div class="settings-content">
+                    <!-- Вкладка "Текст" настроек -->
+                    <div id="text-settings-tab" class="settings-tab-content active">
+                        <div class="subheader">Выберите текст</div>
+                        <select id="text-select">
+                            <option value="">Выберите текст</option>
+                        </select>
+                        
+                        <div class="subheader">или загрузите свой текстовый файл</div>
+                        <button id="file-upload-btn">Выбрать файл</button>
+                        <input type="file" id="file-input" accept=".txt" style="display: none;">
+                        
+                        <div class="subheader">Текст для обработки</div>
+                        <textarea id="text-area" placeholder="Текст появится здесь после выбора..."></textarea>
+                    </div>
+                    
+                    <!-- Вкладка "Каны" настроек -->
+                    <div id="kana-settings-tab" class="settings-tab-content">
+                        <div class="subheader">Тип каны</div>
+                        <select id="kana-type-select">
+                            <option value="hiragana">Хирагана</option>
+                            <option value="katakana">Катакана</option>
+                        </select>
+                        
+                        <div class="subheader">Выбор кан для замены</div>
+                        <button class="select-all-btn" id="select-all-kana">Выбрать все</button>
+                        <div id="kana-settings-grid" class="kana-grid"></div>
+                    </div>
+                    
+                    <!-- Вкладка "Кандзи" настроек -->
+                    <div id="kanji-settings-tab" class="settings-tab-content">
+                        <div class="subheader">Уровень кандзи</div>
+                        <select id="kanji-level-select">
+                            <option value="0">Без кандзи</option>
+                            <option value="1">Первый год обучения</option>
+                            <option value="2">Второй год обучения</option>
+                            <option value="3">Третий год обучения</option>
+                            <option value="4">Четвёртый год обучения</option>
+                            <option value="5">Пятый год обучения</option>
+                            <option value="6">Шестой год обучения</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="kana-tab" class="tab-content">
+            <div class="subheader">Тип каны</div>
+            <select id="kana-display-type">
+                <option value="hiragana">Хирагана</option>
+                <option value="katakana">Катакана</option>
+            </select>
+            <div class="scrollable-content">
+                <div id="kana-display-grid" class="kana-grid"></div>
+            </div>
+        </div>
+
+        <div id="kanji-tab" class="tab-content">
+            <div class="subheader">Год обучения</div>
+            <select id="kanji-display-level">
+                <option value="1">Первый год обучения</option>
+                <option value="2">Второй год обучения</option>
+                <option value="3">Третий год обучения</option>
+                <option value="4">Четвёртый год обучения</option>
+                <option value="5">Пятый год обучения</option>
+                <option value="6">Шестой год обучения</option>
+            </select>
+            
+            <div class="subheader">Поиск кандзи по русскому значению</div>
+            <input type="text" id="kanji-search" placeholder="Введите слово для поиска...">
+            
+            <div class="scrollable-content">
+                <div id="kanji-display-list" class="kanji-list"></div>
+            </div>
+        </div>
+    </div>
+	<div id="kanji-tooltip"></div>
+	<script>
+		/* Подсказка по кандзи */
+		const tooltip = document.getElementById('kanji-tooltip');
+
+		document.addEventListener('mouseover', e => {
+		  const el = e.target.closest('.kanji');
+		  if (!el) return;
+
+		  tooltip.innerHTML = `
+			<strong>${el.dataset.kanji}</strong><br>
+			он: ${el.dataset.on}<br>
+			кун: ${el.dataset.kun}<br>
+			${el.dataset.meanings}
+		  `;
+
+		  const rect = el.getBoundingClientRect();
+		  tooltip.style.left = `${Math.min(rect.left, window.innerWidth - tooltip.offsetWidth - 10)}px`;
+		  tooltip.style.top  = `${rect.top - tooltip.offsetHeight - 8}px`;
+		  tooltip.style.display = 'block';
+		});
+
+		document.addEventListener('mouseout', e => {
+		  if (e.target.closest('.kanji')) {
+			tooltip.style.display = 'none';
+		  }
+		});
+	</script>
+</body>
+</html>
