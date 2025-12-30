@@ -160,7 +160,7 @@ function processKana(text, selectedKana, kanaType) {
 function processText(result) {
     const { selectedKana, settingsKanaType, kanjiLevel, selectedText } = state;
     let txt = selectedText;
-    if (!txt){ txt = 'Выберите текст в настройках (внизу страницы)\n для отображения результата транслитерации\nпо системе Поливанова.';};
+    if (!txt){ txt = 'Здесь появится обработанный текст\nпосле выбора текста\nи применения настроек.';};
     
     // Шаг 1: Обработка кандзи
     let processedText = processKanji(txt, kanjiLevel);
